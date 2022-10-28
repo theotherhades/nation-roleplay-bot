@@ -10,7 +10,8 @@ GUILD_IDS = [1021559138125365280]
 # Database functions
 def fetch_data(channel_id: int, message_id: int):
     channel = client.get_channel(channel_id)
-    return json.loads(channel.fetch_message(message_id).content)
+    message = channel.fetch_message(message_id)
+    return json.loads(message.content)
 
 @client.event
 async def on_ready():
