@@ -4,7 +4,7 @@ from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 
 client = commands.Bot()
-GUILD_IDS = os.environ["GUILD_IDS"]
+GUILD_IDS = [1021559138125365280]
 
 @client.event
 async def on_ready():
