@@ -28,6 +28,6 @@ async def help(interaction: Interaction):
 
 @client.slash_command(name = "test", description = "test", guild_ids = GUILD_IDS)
 async def test(interaction: Interaction):
-    await interaction.response.send_message(f"the data loaded was `{str(fetch_data(1035428713963208734, 1035428847581134931)})`")
+    await interaction.response.send_message(f"the data loaded was `{str(fetch_data(1035428713963208734, 1035428847581134931))}`")
 
 client.run(os.environ["CLIENT_TOKEN"])
