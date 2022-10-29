@@ -46,5 +46,11 @@ async def test(interaction: Interaction):
 @client.slash_command(name = "collection_test", description = "[testing] create a new database collection", guild_ids = GUILD_IDS)
 async def collection_test(interaction: Interaction):
     await create_collection(1035428713963208734, {"zwei is": "incrediby hot", "ramen is": "hot as well"})
+    await interaction.response.send_message("balls")
+
+@client.slash_command(name = "update_collection", description = "ee", guild_ids = GUILD_IDS)
+async def update_collection(interaction: Interaction, data: str):
+    await update_data(1035428713963208734, 1035836462752616509, dict(data))
+    await interaction.response.send_message("poop")
 
 client.run(os.environ["CLIENT_TOKEN"])
