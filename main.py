@@ -8,10 +8,22 @@ client = commands.Bot()
 GUILD_IDS = [1021559138125365280]
 
 # Database functions
+async def create_collection(channel_id: int, data: dict):
+    channel = client.get_channel(channel_id)
+
+    await channel.send(json.dumps(data))
+
 async def fetch_data(channel_id: int, message_id: int):
     channel = client.get_channel(channel_id)
     message = await channel.fetch_message(message_id)
+
     return json.loads(message.content)
+
+async def update_data(channel_id: int, message_id: int, new_data: dict):
+    channel = client.get_channel(channel_id)
+    message = await channel.fetch_message(message_id)
+    
+    await message.edit(json.dumps(new_data))
 
 @client.event
 async def on_ready():
@@ -30,5 +42,9 @@ async def help(interaction: Interaction):
 @client.slash_command(name = "test", description = "test", guild_ids = GUILD_IDS)
 async def test(interaction: Interaction):
     await interaction.response.send_message(f"the data loaded was `{str(await fetch_data(1035428713963208734, 1035428847581134931))}`")
+
+@client.slash_command(name = "collection_test", description = "[testing] create a new database collection", guild_ids = GUILD_IDS)
+async def collection_test(interaction: Interaction):
+    await create_collection(1035428713963208734, {"zwei is": "incrediby hot", "ramen is": "hot as well"})
 
 client.run(os.environ["CLIENT_TOKEN"])
