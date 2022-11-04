@@ -19,11 +19,11 @@ async def fetch_data(channel_id: int, message_id: int):
 
     return json.loads(message.content)
 
-async def update_data(channel_id: int, message_id: int, new_data: dict):
+async def update_data(channel_id: int, message_id: int, new_data: str):
     channel = client.get_channel(channel_id)
     message = await channel.fetch_message(message_id)
     
-    await message.edit(json.dumps(new_data))
+    await message.edit(new_data)
 
 @client.event
 async def on_ready():
@@ -50,7 +50,7 @@ async def collection_test(interaction: Interaction):
 
 @client.slash_command(name = "update_collection", description = "ee", guild_ids = GUILD_IDS)
 async def update_collection(interaction: Interaction, data: str):
-    await update_data(1035428713963208734, 1035836462752616509, dict(data))
+    await update_data(1035428713963208734, 1035836462752616509, data)
     await interaction.response.send_message("poop")
 
 client.run(os.environ["CLIENT_TOKEN"])
