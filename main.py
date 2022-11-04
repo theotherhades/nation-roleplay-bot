@@ -41,7 +41,7 @@ async def help(interaction: Interaction):
 
 @client.slash_command(name = "dev_fetch_collection", description = "Fetch the data from the specified collection", guild_ids = GUILD_IDS)
 async def dev_fetch_collection(interaction: Interaction, channelid, messageid):
-    await interaction.response.send_message(f"The data loaded was `{str(await fetch_collection(channelid, messageid))}`")
+    await interaction.response.send_message(f"The data loaded was `{str(await fetch_collection(int(channelid), int(messageid)))}`")
 
 @client.slash_command(name = "dev_create_collection", description = "Create a new database collection", guild_ids = GUILD_IDS)
 async def dev_create_collection(interaction: Interaction):
