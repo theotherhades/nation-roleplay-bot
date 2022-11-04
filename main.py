@@ -48,7 +48,7 @@ async def dev_create_collection(interaction: Interaction):
     await create_collection(1035428713963208734, {"this is an empty collection": "", "use the /dev_update_collection command to update the data": ""})
     await interaction.response.send_message(f":white_check_mark: Collection created")
 
-@client.slash_command(name = "update_collection", description = "ee", guild_ids = GUILD_IDS)
+@client.slash_command(name = "dev_update_collection", description = "ee", guild_ids = GUILD_IDS)
 async def dev_update_collection(interaction: Interaction, channelid, messageid, data: str):
     await update_collection(int(channelid), int(messageid), data)
     await interaction.response.send_message(f":white_check_mark: Collection updated. Jump: https://discord.com/channels/1021559138125365280/{channelid}/{messageid}")
