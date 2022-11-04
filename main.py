@@ -13,13 +13,13 @@ async def create_collection(channel_id: int, data: dict):
 
     await channel.send(json.dumps(data))
 
-async def fetch_data(channel_id: int, message_id: int):
+async def fetch_collection(channel_id: int, message_id: int):
     channel = client.get_channel(channel_id)
     message = await channel.fetch_message(message_id)
 
     return json.loads(message.content)
 
-async def update_data(channel_id: int, message_id: int, new_data: str):
+async def update_collection(channel_id: int, message_id: int, new_data: str):
     channel = client.get_channel(channel_id)
     message = await channel.fetch_message(message_id)
     
@@ -39,18 +39,18 @@ async def help(interaction: Interaction):
     embed = nextcord.Embed(title = "Help", description = desc)
     await interaction.response.send_message(embed = embed)
 
-@client.slash_command(name = "test", description = "test", guild_ids = GUILD_IDS)
-async def test(interaction: Interaction):
-    await interaction.response.send_message(f"the data loaded was `{str(await fetch_data(1035428713963208734, 1035428847581134931))}`")
+@client.slash_command(name = "dev_fetch_collection", description = "Fetch the data from the specified collection", guild_ids = GUILD_IDS)
+async def dev_fetch_collection(interaction: Interaction, channelid, messageid):
+    await interaction.response.send_message(f"The data loaded was `{str(await fetch_collection(channelid, messageid))}`")
 
-@client.slash_command(name = "collection_test", description = "[testing] create a new database collection", guild_ids = GUILD_IDS)
-async def collection_test(interaction: Interaction):
-    await create_collection(1035428713963208734, {"zwei is": "incrediby hot", "ramen is": "hot as well"})
-    await interaction.response.send_message("balls")
+@client.slash_command(name = "dev_create_collection", description = "Create a new database collection", guild_ids = GUILD_IDS)
+async def dev_create_collection(interaction: Interaction):
+    await create_collection(1035428713963208734, {"this is an empty collection": "", "use the /dev_update_collection command to update the data": ""})
+    await interaction.response.send_message(f":white_check_mark: Collection created")
 
 @client.slash_command(name = "update_collection", description = "ee", guild_ids = GUILD_IDS)
-async def update_collection(interaction: Interaction, channelid, messageid, data: str):
-    await update_data(int(channelid), int(messageid), data)
-    await interaction.response.send_message(f":thumbsup: Collection updated. Jump: https://discord.com/1021559138125365280/{channelid}/{messageid}")
+async def dev_update_collection(interaction: Interaction, channelid, messageid, data: str):
+    await update_collection(int(channelid), int(messageid), data)
+    await interaction.response.send_message(f":white_check_mark: Collection updated. Jump: https://discord.com/channels/1021559138125365280/{channelid}/{messageid}")
 
 client.run(os.environ["CLIENT_TOKEN"])
