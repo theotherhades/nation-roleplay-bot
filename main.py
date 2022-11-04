@@ -7,6 +7,7 @@ from nextcord.ext import commands
 client = commands.Bot()
 GUILD_IDS = [1021559138125365280]
 
+
 # Database functions
 async def create_collection(channel_id: int, data: dict):
     channel = client.get_channel(channel_id)
@@ -25,6 +26,8 @@ async def update_collection(channel_id: int, message_id: int, new_data: str):
     
     await message.edit(new_data)
 
+
+# Events and help command
 @client.event
 async def on_ready():
     print("Bot is online")
@@ -39,6 +42,8 @@ async def help(interaction: Interaction):
     embed = nextcord.Embed(title = "Help", description = desc)
     await interaction.response.send_message(embed = embed)
 
+
+# Dev/testing commands (I should probably sort this shit into cogs... maybe later)
 @client.slash_command(name = "dev_fetch_collection", description = "Fetch the data from the specified collection", guild_ids = GUILD_IDS)
 async def dev_fetch_collection(interaction: Interaction, channelid, messageid):
     await interaction.response.send_message(f"The data loaded was `{str(await fetch_collection(int(channelid), int(messageid)))}`")
@@ -52,5 +57,19 @@ async def dev_create_collection(interaction: Interaction):
 async def dev_update_collection(interaction: Interaction, channelid, messageid, data: str):
     await update_collection(int(channelid), int(messageid), data)
     await interaction.response.send_message(f":white_check_mark: Collection updated. Jump: https://discord.com/channels/1021559138125365280/{channelid}/{messageid}")
+
+@client.slash_command(name = "dev_fetch_userdata", description = "can we get much higher?", guild_ids = GUILD_IDS)
+async def dev_fetch_userdata(interaction: Interaction, user):
+    db_channel_id = 1035428713963208734
+    collection_map = await fetch_collection(db_channel_id, 1038005439511670814)
+    
+    if user in collection_map.keys():
+        await interaction.response.send_message(f"`{await fetch_collection(db_channel_id, collection_map[user])}`")
+    else:
+        await interaction.response.send_message("I couldn't find that user in the database map!")
+
+
+# Actual bot stuff
+# nothing yet lmao
 
 client.run(os.environ["CLIENT_TOKEN"])
