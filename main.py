@@ -49,8 +49,8 @@ async def collection_test(interaction: Interaction):
     await interaction.response.send_message("balls")
 
 @client.slash_command(name = "update_collection", description = "ee", guild_ids = GUILD_IDS)
-async def update_collection(interaction: Interaction, data: str):
-    await update_data(1035428713963208734, 1035836462752616509, data)
-    await interaction.response.send_message("poop")
+async def update_collection(interaction: Interaction, data: str, channelid: int, messageid: int):
+    await update_data(channelid, messageid, data)
+    await interaction.response.send_message(f":thumbsup: Collection updated. Jump: https://discord.com/1021559138125365280/{channelid}/{messageid}")
 
 client.run(os.environ["CLIENT_TOKEN"])
