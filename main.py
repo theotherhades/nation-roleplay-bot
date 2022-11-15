@@ -27,6 +27,7 @@ async def update_collection(channel_id: int, message_id: int, new_data: str):
     await message.edit(new_data)
 
 async def fetch_userdata(user):
+    user = str(user)
     collection_map = await fetch_collection(1035428713963208734, 1038005439511670814)
     id_map = {
         "956278448316358666": "zwei",
