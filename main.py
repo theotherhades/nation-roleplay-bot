@@ -39,6 +39,10 @@ async def fetch_userdata(user):
 
     if user in collection_map.keys():
         data = await fetch_collection(1035428713963208734, int(collection_map[user]))
+        data = {
+            "_msgid": collection_map[user],
+            "data": data
+        }
         return data
     
     else:
@@ -91,10 +95,11 @@ async def dev_fetch_userdata(interaction: Interaction, user):
 @client.slash_command(name = "addmoney", description = "[ADMIN ONLY] Add money to the specified user", guild_ids = GUILD_IDS)
 async def addmoney(interaction: Interaction, user: nextcord.Member, amount):
     data = await fetch_userdata(user.id)
-    if "money" not in data.keys():
-        data["money"] = 0
+    if "money" not in data["data"].keys():
+        data["data"]["money"] = 0
 
-    data["money"] += int(amount)
+    data["data"]["money"] += int(amount)
+    await update_collection(1035428713963208734, int(data["_msgid"]), data["data"])
 
 
 client.run(os.environ["CLIENT_TOKEN"])
