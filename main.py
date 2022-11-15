@@ -82,7 +82,7 @@ async def dev_fetch_userdata(interaction: Interaction, user):
 # Actual bot stuff
 @client.slash_command(name = "addmoney", description = "[ADMIN ONLY] Add money to the specified user", guild_ids = GUILD_IDS)
 async def addmoney(interaction: Interaction, user: nextcord.Member, amount):
-    data = await fetch_userdata(user)
+    data = await fetch_userdata(user.id)
     if "money" not in data.keys():
         data["money"] = 0
 
