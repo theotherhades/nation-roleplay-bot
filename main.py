@@ -39,7 +39,7 @@ async def fetch_userdata(user):
 
     if user in collection_map.keys():
         data = await fetch_collection(1035428713963208734, int(collection_map[user]))
-        return json.loads(data)
+        return data
     
     else:
         raise KeyError(user)
