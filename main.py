@@ -26,6 +26,16 @@ async def update_collection(channel_id: int, message_id: int, new_data: str):
     
     await message.edit(new_data)
 
+async def fetch_userdata(user):
+    collection_map = await fetch_collection(1035428713963208734, 1038005439511670814)
+
+    if user in collection_map.keys():
+        data = await fetch_collection(1035428713963208734, int(collection_map[user]))
+        return json.loads(data)
+    
+    else:
+        raise KeyError(user)
+
 
 # Events and help command
 @client.event
@@ -70,6 +80,13 @@ async def dev_fetch_userdata(interaction: Interaction, user):
 
 
 # Actual bot stuff
-# nothing yet lmao
+@client.slash_command(name = "addmoney", description = "[ADMIN ONLY] Add money to the specified user", guild_ids = GUILD_IDS)
+async def addmoney(interaction: Interaction, user: nextcord.Member, amount):
+    data = await fetch_userdata(user)
+    if "money" not in data.keys():
+        data["money"] = 0
+
+    data["money"] += int(amount)
+
 
 client.run(os.environ["CLIENT_TOKEN"])
