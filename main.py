@@ -28,6 +28,13 @@ async def update_collection(channel_id: int, message_id: int, new_data: str):
 
 async def fetch_userdata(user):
     collection_map = await fetch_collection(1035428713963208734, 1038005439511670814)
+    id_map = {
+        "1038004990695964713": "zwei",
+        "1038005204202823741": "ramen"
+    }
+
+    if user in id_map.keys():
+        user = id_map[user]
 
     if user in collection_map.keys():
         data = await fetch_collection(1035428713963208734, int(collection_map[user]))
