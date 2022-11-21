@@ -1,1 +1,2 @@
 nextcord==2.0.0a10
+pymongo==4.2.0
