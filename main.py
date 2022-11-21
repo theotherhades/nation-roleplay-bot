@@ -7,7 +7,7 @@ from pymongo import MongoClient
 
 client = commands.Bot()
 cluster = MongoClient(os.environ["DB_URL"])
-playerdata = cluster["playerdata"]
+db = cluster["rp"]
 GUILD_IDS = [1021559138125365280]
 
 # Events and help command
@@ -27,7 +27,7 @@ async def help(interaction: Interaction):
 
 @client.slash_command(name = "getplayerdata", description = "for dev", guild_ids = GUILD_IDS)
 async def getplayerdata(interaction: Interaction, user: nextcord.Member):
-    data = playerdata[str(user.id)]
+    data = db["playerdata"][str(user.id)]
 
     await interaction.response.send_message(f"{user.name} has ${data['treasury']}")
 
