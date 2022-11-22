@@ -4,6 +4,7 @@ import nextcord
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 from pymongo import MongoClient
+from bson import ObjectId
 
 client = commands.Bot()
 cluster = MongoClient(os.environ["DB_URL"])
@@ -28,7 +29,7 @@ async def help(interaction: Interaction):
 
 @client.slash_command(name = "getplayerdata", description = "for dev", guild_ids = GUILD_IDS)
 async def getplayerdata(interaction: Interaction, user: nextcord.Member):
-    data = playerdata.find_one({"_id": str(user.id)})
+    data = playerdata.find_one({"_id": ObjectId(str(user.id))})
     print(str(user.id))
     await interaction.response.send_message(f"{user.name} has ${data['treasury']}")
 
