@@ -29,7 +29,7 @@ async def help(interaction: Interaction):
 
 @client.slash_command(name = "getplayerdata", description = "for dev", guild_ids = GUILD_IDS)
 async def getplayerdata(interaction: Interaction, user: nextcord.Member):
-    data = playerdata.find_one({"_id": ObjectId(str(user.id))})
+    data = playerdata.find_one({"_id": str(user.id)})
     print(str(user.id))
     await interaction.response.send_message(f"{user.name} has ${data['treasury']}")
 
